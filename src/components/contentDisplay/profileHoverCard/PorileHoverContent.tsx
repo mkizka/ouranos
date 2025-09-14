@@ -44,7 +44,10 @@ export default function ProfileHoverContent(props: Props) {
             className="hover:brightness-90"
           >
             <Avatar
-              src={profile.avatar?.replace("avatar", "avatar_thumbnail")}
+              src={profile.avatar?.replace(
+                "/img/avatar/plain/",
+                "/img/avatar_thumbnail/plain/"
+              )}
               size="md"
             />
           </Link>

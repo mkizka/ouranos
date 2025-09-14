@@ -79,8 +79,8 @@ export default function FeedPost(props: Props) {
         e.stopPropagation();
         router.push(
           `/dashboard/user/${post.post.author.handle}/post/${getPostId(
-            post.post.uri,
-          )}`,
+            post.post.uri
+          )}`
         );
       }}
       className="cursor-pointer hover:bg-skin-secondary p-3"
@@ -97,7 +97,10 @@ export default function FeedPost(props: Props) {
         >
           <ProfileHoverCard handle={author.handle}>
             <Avatar
-              src={author.avatar?.replace("avatar", "avatar_thumbnail")}
+              src={author.avatar?.replace(
+                "/img/avatar/plain/",
+                "/img/avatar_thumbnail/plain/"
+              )}
               size="md"
             />
           </ProfileHoverCard>

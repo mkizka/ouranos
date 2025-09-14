@@ -40,7 +40,10 @@ export default async function SettingsContainer() {
                 className="flex gap-3"
               >
                 <Avatar
-                  src={profile.avatar?.replace("avatar", "avatar_thumbnail")}
+                  src={profile.avatar?.replace(
+                    "/img/avatar/plain/",
+                    "/img/avatar_thumbnail/plain/"
+                  )}
                   size="md"
                 />
                 <div className="flex flex-col">

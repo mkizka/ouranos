@@ -29,7 +29,10 @@ export default function ReplyToPreview(props: Props) {
       <Threadline className="left-8" />
       <Image
         src={
-          author.avatar?.replace("avatar", "avatar_thumbnail") ?? FallbackAvatar
+          author.avatar?.replace(
+            "/img/avatar/plain/",
+            "/img/avatar_thumbnail/plain/"
+          ) ?? FallbackAvatar
         }
         alt="Avatar"
         width={50}

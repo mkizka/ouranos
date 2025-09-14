@@ -45,7 +45,10 @@ export default function ThreadPost(props: Props) {
         >
           <ProfileHoverCard handle={author.handle}>
             <Avatar
-              src={author.avatar?.replace("avatar", "avatar_thumbnail")}
+              src={author.avatar?.replace(
+                "/img/avatar/plain/",
+                "/img/avatar_thumbnail/plain/"
+              )}
               size="md"
             />
           </ProfileHoverCard>

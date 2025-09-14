@@ -24,7 +24,10 @@ const ProfileCard = memo(function ProfileCard(props: Props) {
         <div className="flex flex-wrap justify-between gap-3">
           <div className="flex flex-wrap items-start gap-2">
             <Avatar
-              src={profile.avatar?.replace("avatar", "avatar_thumbnail")}
+              src={profile.avatar?.replace(
+                "/img/avatar/plain/",
+                "/img/avatar_thumbnail/plain/"
+              )}
             />
             <div className="flex flex-col">
               <div className="flex flex-wrap gap-x-1.5">

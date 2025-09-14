@@ -20,7 +20,12 @@ export default function Aside(props: Props) {
           href={`/dashboard/user/${handle}`}
           className="max-w-[7rem] truncate hover:brightness-90"
         >
-          <Avatar src={avatar?.replace("avatar", "avatar_thumbnail")} />
+          <Avatar
+            src={avatar?.replace(
+              "/img/avatar/plain/",
+              "/img/avatar_thumbnail/plain/"
+            )}
+          />
         </Link>
       </div>
     </aside>

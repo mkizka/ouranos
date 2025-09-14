@@ -20,7 +20,7 @@ export default function KnownFollowers(props: Props) {
 
   const dataLength = knownFollowers?.pages.reduce(
     (acc, page) => acc + (page?.followers.length ?? 0),
-    0,
+    0
   );
 
   const profiles = knownFollowers && knownFollowers.pages[0].followers;
@@ -53,7 +53,10 @@ export default function KnownFollowers(props: Props) {
             <div key={follower.did} style={{ zIndex: MAX_KNOWN_FOLLOWERS - i }}>
               <Avatar
                 size="sm"
-                src={follower.avatar?.replace("avatar", "avatar_thumbnail")}
+                src={follower.avatar?.replace(
+                  "/img/avatar/plain/",
+                  "/img/avatar_thumbnail/plain/"
+                )}
                 className="border-2 border-transparent bg-skin-base"
               />
             </div>

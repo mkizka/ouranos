@@ -28,7 +28,7 @@ const SearchPost = memo(function SearchPost(props: Props) {
       onClick={(e) => {
         e.stopPropagation();
         router.push(
-          `/dashboard/user/${post.author.handle}/post/${getPostId(post.uri)}`,
+          `/dashboard/user/${post.author.handle}/post/${getPostId(post.uri)}`
         );
       }}
       className="border-skin-base border border-x-0 p-3 last:border-b hover:cursor-pointer hover:bg-skin-secondary md:border-x odd:[&:not(:last-child)]:border-b-0 even:[&:not(:last-child)]:border-b-0"
@@ -43,7 +43,10 @@ const SearchPost = memo(function SearchPost(props: Props) {
         >
           <ProfileHoverCard handle={author.handle}>
             <Avatar
-              src={author.avatar?.replace("avatar", "avatar_thumbnail")}
+              src={author.avatar?.replace(
+                "/img/avatar/plain/",
+                "/img/avatar_thumbnail/plain/"
+              )}
               size="md"
             />
           </ProfileHoverCard>

@@ -102,8 +102,10 @@ export default function ProfileHeader(props: Props) {
                 >
                   <Image
                     src={
-                      profile?.avatar?.replace("avatar", "avatar_thumbnail") ??
-                      FallbackAvatar
+                      profile?.avatar?.replace(
+                        "/img/avatar/plain/",
+                        "/img/avatar_thumbnail/plain/"
+                      ) ?? FallbackAvatar
                     }
                     alt="Avatar"
                     width={95}
