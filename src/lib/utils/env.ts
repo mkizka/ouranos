@@ -5,7 +5,7 @@ const asDidUrl = (value: string | undefined) => {
     throw new Error("APPVIEW_DID_URL is not set");
   }
   const [did, fragment] = value.split("#");
-  if (!isDid(did) || fragment) {
+  if (!isDid(did) || !fragment) {
     throw new Error(`APPVIEW_DID_URL is not a valid DID URL: ${value}`);
   }
   return `${did}#${fragment}` as const;
