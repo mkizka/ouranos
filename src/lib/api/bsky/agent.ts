@@ -5,11 +5,14 @@ import { DEFAULT_SERVICE } from "@/lib/consts/general";
 import { getSession } from "next-auth/react";
 import { isServer } from "@/lib/utils/general";
 import { isSessionExpired } from "@/lib/utils/session";
+import { env } from "@/lib/utils/env";
 
 export const createAgent = (service: string) => {
-  return new AtpAgent({
+  const agent = new AtpAgent({
     service,
   });
+  agent.configureProxy(env.APPVIEW_DID_URL);
+  return agent;
 };
 
 export const getBskySession = async () => {
