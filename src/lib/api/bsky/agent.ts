@@ -11,7 +11,7 @@ export const createAgent = (service: string) => {
   const agent = new AtpAgent({
     service,
   });
-  agent.configureProxy(env.APPVIEW_DID_URL);
+  agent.configureProxy(env.NEXT_PUBLIC_APPVIEW_DID_URL);
   return agent;
 };
 

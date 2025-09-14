@@ -12,5 +12,7 @@ const asDidUrl = (value: string | undefined) => {
 };
 
 export const env = {
-  APPVIEW_DID_URL: asDidUrl(process.env.APPVIEW_DID_URL),
+  NEXT_PUBLIC_APPVIEW_DID_URL: asDidUrl(
+    process.env.NEXT_PUBLIC_APPVIEW_DID_URL
+  ),
 };
