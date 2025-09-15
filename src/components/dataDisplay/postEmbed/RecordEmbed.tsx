@@ -29,8 +29,8 @@ export default function RecordEmbed(props: Props) {
           onClick={(e) => {
             router.push(
               `/dashboard/user/${record.author.handle}/post/${getPostId(
-                record.uri,
-              )}`,
+                record.uri
+              )}`
             );
             e.stopPropagation();
           }}
@@ -41,8 +41,8 @@ export default function RecordEmbed(props: Props) {
               <span className="flex items-center gap-1">
                 <Avatar
                   src={record.author.avatar?.replace(
-                    "avatar",
-                    "avatar_thumbnail",
+                    "/img/avatar/plain/",
+                    "/img/avatar_thumbnail/plain/"
                   )}
                   size="xs"
                 />
