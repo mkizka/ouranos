@@ -6,24 +6,27 @@ import { schemas } from './lexicons'
 import { CID } from 'multiformats/cid'
 import * as FyiUnravelFrontpagePost from './types/fyi/unravel/frontpage/post'
 import * as BlueLinkatBoard from './types/blue/linkat/board'
+import * as MeSubscoSyncSubscribeServer from './types/me/subsco/sync/subscribeServer'
 import * as ComWhtwndBlogDefs from './types/com/whtwnd/blog/defs'
 import * as ComWhtwndBlogEntry from './types/com/whtwnd/blog/entry'
-import { ComAtprotoRepoCreateRecord, ComAtprotoRepoDeleteRecord, ComAtprotoRepoGetRecord, ComAtprotoRepoListRecords } from '@atproto/api'
 
 export * as FyiUnravelFrontpagePost from './types/fyi/unravel/frontpage/post'
 export * as BlueLinkatBoard from './types/blue/linkat/board'
+export * as MeSubscoSyncSubscribeServer from './types/me/subsco/sync/subscribeServer'
 export * as ComWhtwndBlogDefs from './types/com/whtwnd/blog/defs'
 export * as ComWhtwndBlogEntry from './types/com/whtwnd/blog/entry'
 
 export class AtpBaseClient extends XrpcClient {
   fyi: FyiNS
   blue: BlueNS
+  me: MeNS
   com: ComNS
 
   constructor(options: FetchHandler | FetchHandlerOptions) {
     super(options, schemas)
     this.fyi = new FyiNS(this)
     this.blue = new BlueNS(this)
+    this.me = new MeNS(this)
     this.com = new ComNS(this)
   }
 
@@ -206,6 +209,45 @@ export class BoardRecord {
       { collection: 'blue.linkat.board', ...params },
       { headers },
     )
+  }
+}
+
+export class MeNS {
+  _client: XrpcClient
+  subsco: MeSubscoNS
+
+  constructor(client: XrpcClient) {
+    this._client = client
+    this.subsco = new MeSubscoNS(client)
+  }
+}
+
+export class MeSubscoNS {
+  _client: XrpcClient
+  sync: MeSubscoSyncNS
+
+  constructor(client: XrpcClient) {
+    this._client = client
+    this.sync = new MeSubscoSyncNS(client)
+  }
+}
+
+export class MeSubscoSyncNS {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  subscribeServer(
+    data?: MeSubscoSyncSubscribeServer.InputSchema,
+    opts?: MeSubscoSyncSubscribeServer.CallOptions,
+  ): Promise<MeSubscoSyncSubscribeServer.Response> {
+    return this._client
+      .call('me.subsco.sync.subscribeServer', opts?.qp, data, opts)
+      .catch((e) => {
+        throw MeSubscoSyncSubscribeServer.toKnownErr(e)
+      })
   }
 }
 

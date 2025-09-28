@@ -80,6 +80,55 @@ export const schemaDict = {
       },
     },
   },
+  MeSubscoSyncSubscribeServer: {
+    lexicon: 1,
+    id: 'me.subsco.sync.subscribeServer',
+    defs: {
+      main: {
+        type: 'procedure',
+        description: 'Subscribe to an AppView server with an invitation code',
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            properties: {
+              inviteCode: {
+                type: 'string',
+                description: 'Invitation code provided by the AppView server',
+              },
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['success'],
+            properties: {
+              success: {
+                type: 'boolean',
+                description: 'Whether the subscription was successful',
+              },
+              message: {
+                type: 'string',
+                description: 'Optional message about the subscription status',
+              },
+            },
+          },
+        },
+        errors: [
+          {
+            name: 'InvalidInviteCode',
+            description: 'The provided invite code is invalid or has been used',
+          },
+          {
+            name: 'AlreadySubscribed',
+            description: 'The user is already subscribed to this server',
+          },
+        ],
+      },
+    },
+  },
   ComWhtwndBlogDefs: {
     lexicon: 1,
     id: 'com.whtwnd.blog.defs',
@@ -205,6 +254,7 @@ export const lexicons: Lexicons = new Lexicons(schemas)
 export const ids = {
   FyiUnravelFrontpagePost: 'fyi.unravel.frontpage.post',
   BlueLinkatBoard: 'blue.linkat.board',
+  MeSubscoSyncSubscribeServer: 'me.subsco.sync.subscribeServer',
   ComWhtwndBlogDefs: 'com.whtwnd.blog.defs',
   ComWhtwndBlogEntry: 'com.whtwnd.blog.entry',
 }
