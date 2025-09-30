@@ -80,6 +80,53 @@ export const schemaDict = {
       },
     },
   },
+  MeSubscoSyncGetSubscriptionStatus: {
+    lexicon: 1,
+    id: 'me.subsco.sync.getSubscriptionStatus',
+    defs: {
+      main: {
+        type: 'query',
+        description: 'Get the subscription status for the authenticated user',
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'union',
+            refs: [
+              'lex:me.subsco.sync.getSubscriptionStatus#subscribed',
+              'lex:me.subsco.sync.getSubscriptionStatus#notSubscribed',
+            ],
+          },
+        },
+      },
+      subscribed: {
+        type: 'object',
+        required: ['isSubscriber', 'backfillStatus'],
+        properties: {
+          isSubscriber: {
+            type: 'boolean',
+            const: true,
+            description: 'The user is a subscriber',
+          },
+          backfillStatus: {
+            type: 'string',
+            enum: ['dirty', 'in-process', 'synchronized'],
+            description: 'Current backfill status',
+          },
+        },
+      },
+      notSubscribed: {
+        type: 'object',
+        required: ['isSubscriber'],
+        properties: {
+          isSubscriber: {
+            type: 'boolean',
+            const: false,
+            description: 'The user is not a subscriber',
+          },
+        },
+      },
+    },
+  },
   MeSubscoSyncSubscribeServer: {
     lexicon: 1,
     id: 'me.subsco.sync.subscribeServer',
@@ -254,6 +301,7 @@ export const lexicons: Lexicons = new Lexicons(schemas)
 export const ids = {
   FyiUnravelFrontpagePost: 'fyi.unravel.frontpage.post',
   BlueLinkatBoard: 'blue.linkat.board',
+  MeSubscoSyncGetSubscriptionStatus: 'me.subsco.sync.getSubscriptionStatus',
   MeSubscoSyncSubscribeServer: 'me.subsco.sync.subscribeServer',
   ComWhtwndBlogDefs: 'com.whtwnd.blog.defs',
   ComWhtwndBlogEntry: 'com.whtwnd.blog.entry',
