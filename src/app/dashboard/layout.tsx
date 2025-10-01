@@ -7,6 +7,7 @@ import Composer from "@/components/actions/composer/Composer";
 import { getProfile } from "@/lib/api/bsky/actor";
 import { getSessionFromServer } from "@/lib/api/auth/session";
 import { AgentProvider } from "../providers/agent";
+import SubscriptionModal from "@/components/subscope/subscriptionModal/SubscriptionModal";
 
 export const metadata: Metadata = {
   title: { template: "%s — Ouranos", default: "Ouranos" },
@@ -33,6 +34,7 @@ export default async function DashboardLayout({
         {profile && <Aside avatar={profile?.avatar} handle={profile?.handle} />}
         <AppBar />
       </main>
+      <SubscriptionModal />
     </AgentProvider>
   );
 }

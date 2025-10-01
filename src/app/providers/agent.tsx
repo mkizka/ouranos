@@ -1,11 +1,20 @@
 "use client";
 
-import { ReactNode, createContext, useContext, useEffect, useRef } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import { createAgent } from "@/lib/api/bsky/agent";
 import AtpAgent from "@atproto/api";
 import type { Session } from "next-auth";
 import { isSessionExpired } from "@/lib/utils/session";
 import { useSession } from "next-auth/react";
+import { AtpBaseClient } from "../../../types/atmosphere";
+import { env } from "@/lib/utils/env";
 
 const AgentContext = createContext<AtpAgent | null>(null);
 
@@ -53,4 +62,17 @@ export const useAgent = () => {
   }
 
   return agent;
+};
+
+export const useCustomAgent = () => {
+  const agent = useAgent();
+  return useMemo(
+    () =>
+      new AtpBaseClient((url, init) => {
+        const headers = new Headers(init.headers);
+        headers.set("atproto-proxy", env.NEXT_PUBLIC_APPVIEW_DID_URL);
+        return agent.sessionManager.fetchHandler(url, { ...init, headers });
+      }),
+    [agent]
+  );
 };
