@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
 import * as Dialog from "@radix-ui/react-dialog";
+import toast from "react-hot-toast";
 import Button from "@/components/actions/button/Button";
 import Input from "@/components/inputs/input/Input";
 import { useAgent, useCustomAgent } from "@/app/providers/agent";
@@ -33,10 +34,8 @@ export default function SubscriptionModal() {
       });
     },
     onSuccess: () => {
+      toast.success("サーバー登録が完了しました");
       setOpen(false);
-    },
-    onError: (error) => {
-      console.error("サーバー登録エラー", error);
     },
   });
 
@@ -54,13 +53,13 @@ export default function SubscriptionModal() {
       />
       <Dialog.Content className="animate-fade animate-duration-200 bg-skin-base border-skin-base fixed left-[50%] top-[50%] z-50 h-fit w-[90svw] max-w-md translate-x-[-50%] translate-y-[-50%] rounded-2xl border p-6 shadow-2xl">
         <Dialog.Title className="text-skin-base mb-4 text-center text-xl font-semibold">
-          {error ? "エラー" : "アカウントの登録"}
+          アカウント登録
         </Dialog.Title>
 
         {error ? (
           <>
             <div className="mb-4 rounded-lg bg-red-50 dark:bg-red-900/20 p-3 text-sm text-red-600 dark:text-red-400">
-              サーバー登録状態の取得に失敗しました
+              エラー：サーバー登録状態の取得に失敗しました
             </div>
             <div className="flex justify-end">
               <Button
@@ -74,10 +73,10 @@ export default function SubscriptionModal() {
         ) : (
           <>
             <div className="text-skin-base mb-4">
-              <p className="text-center mb-4">
+              <Dialog.Description className="text-center mb-4">
                 ログイン中のアカウント({accountName}
                 )をSubscopeに登録しますか？
-              </p>
+              </Dialog.Description>
               <p className="text-center mb-2">登録すると以下を実行します</p>
               <ul className="list-disc pl-5">
                 <li>フォローしているアカウントの新しい投稿を表示</li>
@@ -86,15 +85,17 @@ export default function SubscriptionModal() {
             </div>
 
             <div className="mb-6">
-              <label className="text-skin-base mb-2 block text-sm font-medium">
-                招待コード
-              </label>
               <Input
                 type="text"
                 placeholder="招待コードを入力"
                 value={inviteCode}
                 onChange={(e) => setInviteCode(e.target.value)}
               />
+              {mutation.error && (
+                <div className="mt-2 rounded-lg bg-red-50 dark:bg-red-900/20 p-3 text-sm text-red-600 dark:text-red-400">
+                  {mutation.error.message}
+                </div>
+              )}
             </div>
 
             <div className="flex justify-end gap-2">
