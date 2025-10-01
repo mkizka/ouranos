@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { signOut } from "next-auth/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import Button from "@/components/actions/button/Button";
 import Input from "@/components/inputs/input/Input";
@@ -46,8 +47,11 @@ export default function SubscriptionModal() {
       : "不明なアカウント";
 
   return (
-    <Dialog.Root open={open || !!error} onOpenChange={setOpen}>
-      <Dialog.Overlay className="animate-fade animate-duration-200 bg-skin-overlay-muted fixed inset-0 z-50 h-screen w-screen" />
+    <Dialog.Root open={open || !!error}>
+      <Dialog.Overlay
+        className="animate-fade animate-duration-200 bg-skin-overlay-muted fixed inset-0 z-50 h-screen w-screen"
+        onPointerDown={(e) => e.preventDefault()}
+      />
       <Dialog.Content className="animate-fade animate-duration-200 bg-skin-base border-skin-base fixed left-[50%] top-[50%] z-50 h-fit w-[90svw] max-w-md translate-x-[-50%] translate-y-[-50%] rounded-2xl border p-6 shadow-2xl">
         <Dialog.Title className="text-skin-base mb-4 text-center text-xl font-semibold">
           {error ? "エラー" : "アカウントの登録"}
@@ -95,7 +99,7 @@ export default function SubscriptionModal() {
 
             <div className="flex justify-end gap-2">
               <Button
-                onClick={() => setOpen(false)}
+                onClick={() => signOut({ callbackUrl: "/" })}
                 className="text-skin-base border-skin-base hover:bg-skin-secondary rounded-full border px-4 py-2 text-sm font-semibold"
               >
                 ログアウト
