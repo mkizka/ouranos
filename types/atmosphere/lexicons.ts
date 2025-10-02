@@ -595,6 +595,39 @@ export const schemaDict = {
       },
     },
   },
+  MeSubscoSyncUnsubscribeServer: {
+    lexicon: 1,
+    id: 'me.subsco.sync.unsubscribeServer',
+    defs: {
+      main: {
+        type: 'procedure',
+        description: 'Unsubscribe from an AppView server',
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['success'],
+            properties: {
+              success: {
+                type: 'boolean',
+                description: 'Whether the unsubscription was successful',
+              },
+              message: {
+                type: 'string',
+                description: 'Optional message about the unsubscription status',
+              },
+            },
+          },
+        },
+        errors: [
+          {
+            name: 'NotSubscribed',
+            description: 'The user is not subscribed to this server',
+          },
+        ],
+      },
+    },
+  },
   ComWhtwndBlogDefs: {
     lexicon: 1,
     id: 'com.whtwnd.blog.defs',
@@ -729,6 +762,7 @@ export const ids = {
   BlueLinkatBoard: 'blue.linkat.board',
   MeSubscoSyncGetSubscriptionStatus: 'me.subsco.sync.getSubscriptionStatus',
   MeSubscoSyncSubscribeServer: 'me.subsco.sync.subscribeServer',
+  MeSubscoSyncUnsubscribeServer: 'me.subsco.sync.unsubscribeServer',
   ComWhtwndBlogDefs: 'com.whtwnd.blog.defs',
   ComWhtwndBlogEntry: 'com.whtwnd.blog.entry',
 }

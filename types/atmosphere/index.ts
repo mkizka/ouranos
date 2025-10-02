@@ -15,6 +15,7 @@ import * as FyiUnravelFrontpagePost from './types/fyi/unravel/frontpage/post'
 import * as BlueLinkatBoard from './types/blue/linkat/board'
 import * as MeSubscoSyncGetSubscriptionStatus from './types/me/subsco/sync/getSubscriptionStatus'
 import * as MeSubscoSyncSubscribeServer from './types/me/subsco/sync/subscribeServer'
+import * as MeSubscoSyncUnsubscribeServer from './types/me/subsco/sync/unsubscribeServer'
 import * as ComWhtwndBlogDefs from './types/com/whtwnd/blog/defs'
 import * as ComWhtwndBlogEntry from './types/com/whtwnd/blog/entry'
 
@@ -29,6 +30,7 @@ export * as FyiUnravelFrontpagePost from './types/fyi/unravel/frontpage/post'
 export * as BlueLinkatBoard from './types/blue/linkat/board'
 export * as MeSubscoSyncGetSubscriptionStatus from './types/me/subsco/sync/getSubscriptionStatus'
 export * as MeSubscoSyncSubscribeServer from './types/me/subsco/sync/subscribeServer'
+export * as MeSubscoSyncUnsubscribeServer from './types/me/subsco/sync/unsubscribeServer'
 export * as ComWhtwndBlogDefs from './types/com/whtwnd/blog/defs'
 export * as ComWhtwndBlogEntry from './types/com/whtwnd/blog/entry'
 
@@ -442,6 +444,17 @@ export class MeSubscoSyncNS {
       .call('me.subsco.sync.subscribeServer', opts?.qp, data, opts)
       .catch((e) => {
         throw MeSubscoSyncSubscribeServer.toKnownErr(e)
+      })
+  }
+
+  unsubscribeServer(
+    data?: MeSubscoSyncUnsubscribeServer.InputSchema,
+    opts?: MeSubscoSyncUnsubscribeServer.CallOptions,
+  ): Promise<MeSubscoSyncUnsubscribeServer.Response> {
+    return this._client
+      .call('me.subsco.sync.unsubscribeServer', opts?.qp, data, opts)
+      .catch((e) => {
+        throw MeSubscoSyncUnsubscribeServer.toKnownErr(e)
       })
   }
 }
