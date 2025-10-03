@@ -17,6 +17,7 @@ import { getSessionFromServer } from "@/lib/api/auth/session";
 import { getProfile } from "@/lib/api/bsky/actor";
 import Avatar from "@/components/dataDisplay/avatar/Avatar";
 import SignOut from "@/components/actions/signOut/SignOut";
+import SubscopeSection from "@/containers/settings/subscopeSection/SubscopeSection";
 
 export default async function SettingsContainer() {
   const session = await getSessionFromServer();
@@ -79,6 +80,8 @@ export default async function SettingsContainer() {
           </div>
         </section>
       )}
+
+      <SubscopeSection />
 
       <section>
         <h3 className="text-skin-base mx-3 mb-2 text-xl font-semibold md:mx-0">
@@ -152,6 +155,7 @@ export default async function SettingsContainer() {
           </Link>
         </section>
       </section>
+
       <section>
         <h3 className="text-skin-base mx-3 mb-2 text-xl font-semibold md:mx-0">
           Learn More
