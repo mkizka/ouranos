@@ -48,18 +48,18 @@ export default function SettingsContainerSkeleton() {
         <div className="border-skin-base mt-2 flex w-full flex-col gap-3 rounded-none border border-x-0 p-3 md:rounded-2xl md:border-x">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="bg-skin-tertiary h-5 w-5 animate-pulse rounded" />
-              <div className="bg-skin-tertiary h-5 w-32 animate-pulse rounded" />
+              <div className="bg-skin-muted h-5 w-5 animate-pulse rounded" />
+              <div className="bg-skin-muted h-5 w-32 animate-pulse rounded" />
             </div>
-            <div className="bg-skin-tertiary h-7 w-20 animate-pulse rounded-full" />
+            <div className="bg-skin-muted h-7 w-20 animate-pulse rounded-full" />
           </div>
           <hr className="border-skin-base" />
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="bg-skin-tertiary h-5 w-5 animate-pulse rounded" />
-              <div className="bg-skin-tertiary h-5 w-28 animate-pulse rounded" />
+              <div className="bg-skin-muted h-5 w-5 animate-pulse rounded" />
+              <div className="bg-skin-muted h-5 w-28 animate-pulse rounded" />
             </div>
-            <div className="bg-skin-tertiary h-10 w-32 animate-pulse rounded-full" />
+            <div className="bg-skin-muted h-10 w-32 animate-pulse rounded-full" />
           </div>
         </div>
       </section>
