@@ -79,7 +79,7 @@ export const authOptions: NextAuthOptions = {
       session.user.bskySession = receivedToken.bskySession;
 
       const refreshToken: { iat: number; exp: number } = jwtDecode(
-        receivedToken.bskySession.refreshJwt,
+        receivedToken.bskySession.refreshJwt
       );
 
       const now = Date.now();
@@ -89,19 +89,24 @@ export const authOptions: NextAuthOptions = {
       }
 
       const accessToken: { iat: number; exp: number } = jwtDecode(
-        receivedToken.bskySession.accessJwt,
+        receivedToken.bskySession.accessJwt
       );
 
       if (now >= accessToken.exp * 1000) {
         console.log("Access token expired, refreshing");
-        const { data } = await agent.com.atproto.server.refreshSession(
-          undefined,
-          {
-            headers: {
-              authorization: "Bearer " + session.user.bskySession.refreshJwt,
-            },
-          },
-        );
+        let data;
+        try {
+          data = await agent.com.atproto.server
+            .refreshSession(undefined, {
+              headers: {
+                authorization: "Bearer " + session.user.bskySession.refreshJwt,
+              },
+            })
+            .then((res) => res.data);
+        } catch (error) {
+          console.warn("Could not refresh session, logging out", error);
+          throw new Error("Could not refresh session, logging out");
+        }
         session.user.bskySession.refreshJwt = data.refreshJwt;
         session.user.bskySession.accessJwt = data.accessJwt;
         session.user.handle = data.handle;
