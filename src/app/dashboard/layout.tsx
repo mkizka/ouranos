@@ -8,6 +8,7 @@ import { getProfile } from "@/lib/api/bsky/actor";
 import { getSessionFromServer } from "@/lib/api/auth/session";
 import { AgentProvider } from "../providers/agent";
 import SubscriptionModal from "@/components/subscope/subscriptionModal/SubscriptionModal";
+import { env } from "@/lib/utils/env";
 
 export const metadata: Metadata = {
   title: { template: "%s — Ouranos", default: "Ouranos" },
@@ -23,7 +24,7 @@ export default async function DashboardLayout({
   const profile = await getProfile(session?.user.bskySession.handle);
 
   return (
-    <AgentProvider session={session}>
+    <AgentProvider session={session} appViewDidUrl={env.APPVIEW_DID_URL}>
       <main className="bg-skin-base flex justify-center gap-6 pb-20 md:mt-6 lg:gap-16 animate-fade">
         {profile && <Composer author={profile} />}
         <SidePanel />

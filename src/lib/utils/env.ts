@@ -5,19 +5,19 @@ const asDidUrl = (value: string | undefined) => {
     return value as `did:${string}#${string}`;
   }
   if (!value) {
-    throw new Error("NEXT_PUBLIC_APPVIEW_DID_URL is not set");
+    throw new Error("APPVIEW_DID_URL is not set");
   }
   const [did, fragment] = value.split("#");
   if (!isDid(did) || !fragment) {
     throw new Error(
-      `NEXT_PUBLIC_APPVIEW_DID_URL is not a valid DID URL: ${value}`
+      `APPVIEW_DID_URL is not a valid DID URL: ${value}`
     );
   }
   return `${did}#${fragment}` as const;
 };
 
 export const env = {
-  NEXT_PUBLIC_APPVIEW_DID_URL: asDidUrl(
-    process.env.NEXT_PUBLIC_APPVIEW_DID_URL
+  APPVIEW_DID_URL: asDidUrl(
+    process.env.APPVIEW_DID_URL
   ),
 };

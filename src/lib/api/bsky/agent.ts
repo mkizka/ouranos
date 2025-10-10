@@ -7,11 +7,16 @@ import { isServer } from "@/lib/utils/general";
 import { isSessionExpired } from "@/lib/utils/session";
 import { env } from "@/lib/utils/env";
 
-export const createAgent = (service: string) => {
+export const createAgent = (
+  service: string,
+  appViewDidUrl?: `did:${string}#${string}`
+) => {
   const agent = new AtpAgent({
     service,
   });
-  agent.configureProxy(env.NEXT_PUBLIC_APPVIEW_DID_URL);
+  if (appViewDidUrl) {
+    agent.configureProxy(appViewDidUrl);
+  }
   return agent;
 };
 

@@ -14,24 +14,31 @@ import type { Session } from "next-auth";
 import { isSessionExpired } from "@/lib/utils/session";
 import { useSession } from "next-auth/react";
 import { AtpBaseClient } from "../../../types/atmosphere";
-import { env } from "@/lib/utils/env";
 
 const AgentContext = createContext<AtpAgent | null>(null);
+const AppViewDidUrlContext = createContext<`did:${string}#${string}` | null>(
+  null
+);
 
 interface AgentProviderProps {
   children: ReactNode;
   session: Session | null;
+  appViewDidUrl: `did:${string}#${string}`;
 }
 
 export const AgentProvider = (props: AgentProviderProps) => {
-  const { children, session } = props;
+  const { children, session, appViewDidUrl } = props;
 
   if (!session) return;
-  const agent = createAgent(session.user.service);
+  const agent = createAgent(session.user.service, appViewDidUrl);
   agent.sessionManager.session = session.user.bskySession;
 
   return (
-    <AgentContext.Provider value={agent}>{children}</AgentContext.Provider>
+    <AgentContext.Provider value={agent}>
+      <AppViewDidUrlContext.Provider value={appViewDidUrl}>
+        {children}
+      </AppViewDidUrlContext.Provider>
+    </AgentContext.Provider>
   );
 };
 
@@ -64,15 +71,25 @@ export const useAgent = () => {
   return agent;
 };
 
+const useAppViewDidUrl = () => {
+  const appViewDidUrl = useContext(AppViewDidUrlContext);
+  if (!appViewDidUrl) {
+    throw new Error("useAppViewDidUrl must be used inside AgentProvider");
+  }
+  return appViewDidUrl;
+};
+
 export const useCustomAgent = () => {
   const agent = useAgent();
+  const appViewDidUrl = useAppViewDidUrl();
+
   return useMemo(
     () =>
       new AtpBaseClient((url, init) => {
         const headers = new Headers(init.headers);
-        headers.set("atproto-proxy", env.NEXT_PUBLIC_APPVIEW_DID_URL);
+        headers.set("atproto-proxy", appViewDidUrl);
         return agent.sessionManager.fetchHandler(url, { ...init, headers });
       }),
-    [agent]
+    [agent, appViewDidUrl]
   );
 };
