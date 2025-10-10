@@ -1,6 +1,9 @@
 import { isDid } from "@atproto/api";
 
 const asDidUrl = (value: string | undefined) => {
+  if (process.env.SKIP_ENV_VALIDATION) {
+    return value as `did:${string}#${string}`;
+  }
   if (!value) {
     throw new Error("NEXT_PUBLIC_APPVIEW_DID_URL is not set");
   }
