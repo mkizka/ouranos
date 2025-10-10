@@ -8,12 +8,16 @@ import { getAgentFromServer } from "../agent";
 import { ContentFilterLabel } from "../../../../../types/feed";
 
 export const getProfile = async (handle: string | undefined, agent?: Agent) => {
-  if (!handle) return;
+  if (!handle) return null;
   if (!agent) agent = await getAgentFromServer();
-  const profile = await agent.getProfile({ actor: handle });
-
-  if (!profile.success) throw new Error("Could not get profile");
-  return profile.data;
+  try {
+    const profile = await agent.getProfile({ actor: handle });
+    if (!profile.success) return null;
+    return profile.data;
+  } catch (error) {
+    console.error("Failed to fetch profile:", error);
+    return null;
+  }
 };
 
 export const getSuggestions = async () => {
