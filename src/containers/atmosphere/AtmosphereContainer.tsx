@@ -15,7 +15,6 @@ import FrontpageContainer from "./FrontpageContainer";
 import AtmosphereNotFoundContainer from "./AtmosphereNotFoundContainer";
 import AtmosphereContainerSkeleton from "./AtmosphereContainerSkeleton";
 import FeedAlert from "@/components/feedback/feedAlert/FeedAlert";
-import { env } from "@/lib/utils/env";
 
 interface Props {
   handle: string;
@@ -35,18 +34,18 @@ export default function AtmosphereContainer(props: Props) {
 
     queryFn: async () => {
       const pds = await getPDS(did);
-      const agent = createAgent(pds, env.APPVIEW_DID_URL);
+      const agent = createAgent(pds);
 
       const frontpageRecords = await getATRecords(
         did,
         "fyi.unravel.frontpage.post",
-        agent
+        agent,
       );
       const linkatRecords = await getATRecords(did, "blue.linkat.board", agent);
       const whtwndRecords = await getATRecords(
         did,
         "com.whtwnd.blog.entry",
-        agent
+        agent,
       );
 
       return [
@@ -88,7 +87,7 @@ export default function AtmosphereContainer(props: Props) {
       }
       return acc;
     },
-    {} as Record<string, any[]>
+    {} as Record<string, any[]>,
   );
 
   const renderContainer = () => {
