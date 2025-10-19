@@ -9,14 +9,12 @@ import { env } from "@/lib/utils/env";
 
 export const createAgent = (
   service: string,
-  appViewDidUrl?: `did:${string}#${string}`
+  appViewDidUrl: `did:${string}#${string}`
 ) => {
   const agent = new AtpAgent({
     service,
   });
-  if (appViewDidUrl) {
-    agent.configureProxy(appViewDidUrl);
-  }
+  agent.configureProxy(appViewDidUrl);
   return agent;
 };
 
@@ -30,7 +28,7 @@ export const getBskySession = async () => {
       throw new Error("No session found");
     }
 
-    const agent = createAgent(session.user.service);
+    const agent = createAgent(session.user.service, env.APPVIEW_DID_URL);
 
     if (isSessionExpired(session.user.bskySession)) {
       const result = await agent.resumeSession(session.user.bskySession);

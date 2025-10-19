@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { jwtDecode } from "jwt-decode";
 import { createAgent } from "@/lib/api/bsky/agent";
 import { getService } from "@/app/api/auth/identity/actions";
+import { env } from "@/lib/utils/env";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -25,7 +26,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         const service = await getService(credentials.handle);
-        const agent = createAgent(service);
+        const agent = createAgent(service, env.APPVIEW_DID_URL);
 
         const result = await agent.login({
           identifier: credentials.handle,
@@ -69,7 +70,7 @@ export const authOptions: NextAuthOptions = {
     // add extra properties to session
     async session({ session, token }): Promise<Session> {
       const receivedToken = token as JWT & User;
-      const agent = createAgent(receivedToken.service);
+      const agent = createAgent(receivedToken.service, env.APPVIEW_DID_URL);
 
       session.user.service = receivedToken.service;
       session.user.email = receivedToken.email;
@@ -79,7 +80,7 @@ export const authOptions: NextAuthOptions = {
       session.user.bskySession = receivedToken.bskySession;
 
       const refreshToken: { iat: number; exp: number } = jwtDecode(
-        receivedToken.bskySession.refreshJwt,
+        receivedToken.bskySession.refreshJwt
       );
 
       const now = Date.now();
@@ -89,7 +90,7 @@ export const authOptions: NextAuthOptions = {
       }
 
       const accessToken: { iat: number; exp: number } = jwtDecode(
-        receivedToken.bskySession.accessJwt,
+        receivedToken.bskySession.accessJwt
       );
 
       if (now >= accessToken.exp * 1000) {
@@ -100,7 +101,7 @@ export const authOptions: NextAuthOptions = {
             headers: {
               authorization: "Bearer " + session.user.bskySession.refreshJwt,
             },
-          },
+          }
         );
         session.user.bskySession.refreshJwt = data.refreshJwt;
         session.user.bskySession.accessJwt = data.accessJwt;
