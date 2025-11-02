@@ -28,8 +28,12 @@ export default function SubscopeSection() {
         return "未同期";
       case "in-process":
         return "同期中";
+      case "ready":
+        return "準備完了";
       case "synchronized":
         return "同期完了";
+      case "failed":
+        return "失敗";
       default:
         return "不明";
     }
@@ -41,8 +45,11 @@ export default function SubscopeSection() {
         return "text-status-warning bg-status-warning/20";
       case "in-process":
         return "text-blue-600 dark:text-blue-400 bg-blue-600/20 dark:bg-blue-400/20";
+      case "ready":
       case "synchronized":
         return "text-status-success bg-status-success/20";
+      case "failed":
+        return "text-status-error bg-status-error/20";
       default:
         return "text-skin-tertiary bg-skin-tertiary/20";
     }
