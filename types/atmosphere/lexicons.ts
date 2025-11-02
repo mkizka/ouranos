@@ -528,7 +528,7 @@ export const schemaDict = {
           },
           syncRepoStatus: {
             type: 'string',
-            enum: ['dirty', 'in-process', 'synchronized'],
+            enum: ['dirty', 'in-process', 'ready', 'synchronized', 'failed'],
             description: 'Current repository sync status',
           },
         },
