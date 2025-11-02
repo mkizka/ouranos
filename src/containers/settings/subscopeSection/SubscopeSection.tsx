@@ -8,8 +8,8 @@ import { useCustomAgent } from "@/app/providers/agent";
 import { isSubscribed } from "../../../../types/atmosphere/types/me/subsco/sync/getSubscriptionStatus";
 import { MeSubscoSyncGetSubscriptionStatus } from "../../../../types/atmosphere";
 
-type BackfillStatus =
-  MeSubscoSyncGetSubscriptionStatus.Subscribed["backfillStatus"];
+type SyncRepoStatus =
+  MeSubscoSyncGetSubscriptionStatus.Subscribed["syncRepoStatus"];
 
 export default function SubscopeSection() {
   const agent = useCustomAgent();
@@ -22,7 +22,7 @@ export default function SubscopeSection() {
     },
   });
 
-  const getBackfillStatusText = (status?: BackfillStatus) => {
+  const getSyncRepoStatusText = (status?: SyncRepoStatus) => {
     switch (status) {
       case "dirty":
         return "未同期";
@@ -35,7 +35,7 @@ export default function SubscopeSection() {
     }
   };
 
-  const getBackfillStatusColor = (status?: BackfillStatus) => {
+  const getSyncRepoStatusColor = (status?: SyncRepoStatus) => {
     switch (status) {
       case "dirty":
         return "text-status-warning bg-status-warning/20";
@@ -76,9 +76,9 @@ export default function SubscopeSection() {
             </div>
             {data && isSubscribed(data) ? (
               <span
-                className={`inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold ${getBackfillStatusColor(data.backfillStatus)}`}
+                className={`inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold ${getSyncRepoStatusColor(data.syncRepoStatus)}`}
               >
-                {getBackfillStatusText(data.backfillStatus)}
+                {getSyncRepoStatusText(data.syncRepoStatus)}
               </span>
             ) : (
               <span className="text-skin-tertiary text-sm">未登録</span>

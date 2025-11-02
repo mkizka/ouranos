@@ -519,17 +519,17 @@ export const schemaDict = {
       },
       subscribed: {
         type: 'object',
-        required: ['isSubscriber', 'backfillStatus'],
+        required: ['isSubscriber', 'syncRepoStatus'],
         properties: {
           isSubscriber: {
             type: 'boolean',
             const: true,
             description: 'The user is a subscriber',
           },
-          backfillStatus: {
+          syncRepoStatus: {
             type: 'string',
             enum: ['dirty', 'in-process', 'synchronized'],
-            description: 'Current backfill status',
+            description: 'Current repository sync status',
           },
         },
       },
