@@ -53,13 +53,13 @@ export default function SubscriptionModal() {
       />
       <Dialog.Content className="animate-fade animate-duration-200 bg-skin-base border-skin-base fixed left-[50%] top-[50%] z-50 h-fit w-[90svw] max-w-md translate-x-[-50%] translate-y-[-50%] rounded-2xl border p-6 shadow-2xl">
         <Dialog.Title className="text-skin-base mb-4 text-center text-xl font-semibold">
-          アカウント登録
+          {error ? "エラー" : "アカウント登録"}
         </Dialog.Title>
 
         {error ? (
           <>
             <div className="mb-4 rounded-lg bg-red-50 dark:bg-red-900/20 p-3 text-sm text-red-600 dark:text-red-400">
-              エラー：サーバー登録状態の取得に失敗しました
+              {error.message}
             </div>
             <div className="flex justify-end">
               <Button
