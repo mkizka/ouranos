@@ -33,8 +33,6 @@ export function toKnownErr(e: any) {
 export interface Subscribed {
   /** The user is a subscriber */
   isSubscriber: true
-  /** Current repository sync status */
-  syncRepoStatus: 'dirty' | 'in-process' | 'ready' | 'synchronized' | 'failed'
   [k: string]: unknown
 }
 
