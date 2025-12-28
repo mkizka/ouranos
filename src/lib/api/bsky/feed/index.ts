@@ -2,6 +2,13 @@ import { type Agent, AppBskyActorDefs } from "@atproto/api";
 import { getAgentFromServer } from "../agent";
 import { SavedFeed } from "../../../../../types/feed";
 
+// get/putPreferencesはatproto-proxyなしでリクエストする
+const withoutProxy = (agent: Agent) => {
+  const cloned = agent.clone();
+  cloned.configureProxy(null);
+  return cloned;
+};
+
 export const getPopularFeeds = async (search?: string, agent?: Agent) => {
   if (!agent) agent = await getAgentFromServer();
 
@@ -24,7 +31,7 @@ export const getPopularFeeds = async (search?: string, agent?: Agent) => {
 
 export const getSavedFeeds = async (agent?: Agent): Promise<SavedFeed[]> => {
   if (!agent) agent = await getAgentFromServer();
-  const prefs = await agent.app.bsky.actor.getPreferences();
+  const prefs = await withoutProxy(agent).app.bsky.actor.getPreferences();
   if (!prefs.success) throw new Error("Could not fetch feeds");
 
   const feedsPref = prefs.data.preferences.find(
@@ -49,7 +56,8 @@ export const getSavedFeeds = async (agent?: Agent): Promise<SavedFeed[]> => {
 };
 
 export const togglePinFeed = async (agent: Agent, feed: string) => {
-  const prefs = await agent.app.bsky.actor.getPreferences();
+  const agentWithoutProxy = withoutProxy(agent);
+  const prefs = await agentWithoutProxy.app.bsky.actor.getPreferences();
   if (!prefs.success) throw new Error("Could not fetch feeds");
 
   for (const pref of prefs.data.preferences) {
@@ -65,13 +73,14 @@ export const togglePinFeed = async (agent: Agent, feed: string) => {
     }
   }
 
-  return await agent.app.bsky.actor.putPreferences({
+  return await agentWithoutProxy.app.bsky.actor.putPreferences({
     preferences: prefs.data.preferences,
   });
 };
 
 export const toggleSaveFeed = async (agent: Agent, feed: string) => {
-  const prefs = await agent.app.bsky.actor.getPreferences();
+  const agentWithoutProxy = withoutProxy(agent);
+  const prefs = await agentWithoutProxy.app.bsky.actor.getPreferences();
   if (!prefs.success) throw new Error("Could not fetch feeds");
 
   for (const pref of prefs.data.preferences) {
@@ -88,7 +97,7 @@ export const toggleSaveFeed = async (agent: Agent, feed: string) => {
     }
   }
 
-  return await agent.app.bsky.actor.putPreferences({
+  return await agentWithoutProxy.app.bsky.actor.putPreferences({
     preferences: prefs.data.preferences,
   });
 };
