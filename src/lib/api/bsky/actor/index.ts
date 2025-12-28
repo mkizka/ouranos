@@ -81,9 +81,16 @@ export const searchPosts = async (
   }
 };
 
+// getPreferences,putPreferencesはatproto-proxyなしでリクエストする
+const withoutProxy = (agent: Agent) => {
+  const cloned = agent.clone();
+  cloned.configureProxy(null);
+  return cloned;
+};
+
 export const getPreferences = async (agent?: Agent) => {
   if (!agent) agent = await getAgentFromServer();
-  const prefs = await agent.app.bsky.actor.getPreferences();
+  const prefs = await withoutProxy(agent).app.bsky.actor.getPreferences();
   if (!prefs.success) throw new Error("Could not get preferences");
   return prefs.data.preferences;
 };
@@ -93,7 +100,7 @@ export const updateThreadViewPreferences = async (
   agent?: Agent
 ) => {
   if (!agent) agent = await getAgentFromServer();
-  const prefs = await agent.setThreadViewPrefs(pref);
+  const prefs = await withoutProxy(agent).setThreadViewPrefs(pref);
   return prefs;
 };
 export const updateHomeFeedPreferences = async (
@@ -101,7 +108,7 @@ export const updateHomeFeedPreferences = async (
   agent?: Agent
 ) => {
   if (!agent) agent = await getAgentFromServer();
-  const prefs = await agent.setFeedViewPrefs("home", pref);
+  const prefs = await withoutProxy(agent).setFeedViewPrefs("home", pref);
   return prefs;
 };
 
@@ -110,7 +117,7 @@ export const updateIsAdultContentEnabled = async (
   agent?: Agent
 ) => {
   if (!agent) agent = await getAgentFromServer();
-  const prefs = await agent.setAdultContentEnabled(value);
+  const prefs = await withoutProxy(agent).setAdultContentEnabled(value);
   return prefs;
 };
 
@@ -120,7 +127,7 @@ export const updateContentFilterPreferences = async (
   agent?: Agent
 ) => {
   if (!agent) agent = await getAgentFromServer();
-  const prefs = await agent.setContentLabelPref(pref, value);
+  const prefs = await withoutProxy(agent).setContentLabelPref(pref, value);
   return prefs;
 };
 
