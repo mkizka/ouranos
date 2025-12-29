@@ -47,7 +47,7 @@ export default function QuoteToPreview(props: Props) {
             @{author.handle}
           </span>
           <span className="text-skin-tertiary whitespace-nowrap font-medium">
-            &nbsp;· {getRelativeTime(post.indexedAt)}
+            &nbsp;· {getRelativeTime(post.createdAt)}
           </span>
         </div>
         <p className={`${selectedTextClass} text-skin-base`}>{post.text}</p>

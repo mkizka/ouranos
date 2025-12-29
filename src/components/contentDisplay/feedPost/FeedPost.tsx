@@ -11,7 +11,7 @@ import PostHider from "@/components/dataDisplay/postHider/PostHider";
 import Link from "next/link";
 import Threadline from "@/components/dataDisplay/threadLine/ThreadLine";
 import { getPostId } from "@/lib/utils/link";
-import { getRelativeTime } from "@/lib/utils/time";
+import { getRelativeTime, getCreatedAt } from "@/lib/utils/time";
 import { getPostFilter } from "@/lib/utils/feed";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -27,7 +27,7 @@ interface Props {
 
 export default function FeedPost(props: Props) {
   const { post, isReply, isParent, filter } = props;
-  const { author, indexedAt } = post.post;
+  const { author } = post.post;
   const { reason } = post;
   const { showToggle, shouldHide, message } = getPostFilter(post, filter);
   const [hidden, setHidden] = useState(shouldHide);
@@ -123,7 +123,7 @@ export default function FeedPost(props: Props) {
               </span>
             </Link>
             <span className="text-skin-tertiary whitespace-nowrap font-medium">
-              &nbsp;· {getRelativeTime(indexedAt)}
+              &nbsp;· {getRelativeTime(getCreatedAt(post.post.record) ?? post.post.indexedAt)}
             </span>
           </div>
           <PostText record={post.post.record} />

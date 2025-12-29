@@ -1,5 +1,5 @@
 import { getNotificationLabel } from "@/lib/utils/text";
-import { getRelativeTime } from "@/lib/utils/time";
+import { getRelativeTime, getCreatedAt } from "@/lib/utils/time";
 import { getNotificationIcon } from "@/lib/utils/icon";
 import {
   GROUPABLE_NOTIFICATIONS,
@@ -24,7 +24,7 @@ interface Props {
 
 const NotificationItem = memo(function NotificationItem(props: Props) {
   const { notification, filter } = props;
-  const { reason, author, indexedAt, isRead, allAuthors } = notification;
+  const { reason, author, isRead, allAuthors } = notification;
   const subjectUri =
     notification.reasonSubject as AppBskyNotificationListNotifications.Notification["reasonSubject"];
 
@@ -94,7 +94,7 @@ const NotificationItem = memo(function NotificationItem(props: Props) {
                   {getNotificationLabel(reason)}
                 </span>
                 <span className="text-skin-tertiary whitespace-nowrap font-medium">
-                  &nbsp;· {getRelativeTime(indexedAt)}
+                  &nbsp;· {getRelativeTime(getCreatedAt(notification.record) ?? notification.indexedAt)}
                 </span>
                 {subjectUri && (
                   <div className="mt-2">

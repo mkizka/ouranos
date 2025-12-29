@@ -35,3 +35,13 @@ export function getFormattedDate(date: string): string {
 
   return formattedWithAt;
 }
+
+export function getCreatedAt(obj: unknown): string | undefined {
+  if (obj && typeof obj === "object" && "createdAt" in obj) {
+    const createdAt = obj.createdAt;
+    if (typeof createdAt === "string") {
+      return createdAt;
+    }
+  }
+  return undefined;
+}

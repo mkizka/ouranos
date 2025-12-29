@@ -6,6 +6,7 @@ import { useClipboard } from "use-clipboard-copy";
 import { AppBskyFeedPost, type AppBskyFeedDefs } from "@atproto/api";
 import { useCallback } from "react";
 import { getPostId } from "@/lib/utils/link";
+import { getCreatedAt } from "@/lib/utils/time";
 import useMuteUser from "@/lib/hooks/bsky/feed/useMuteUser";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -163,7 +164,7 @@ export default function PostActions(props: Props) {
                       uri: post.uri,
                       cid: post.cid,
                       text: text.toString(),
-                      indexedAt: post.indexedAt,
+                      createdAt: getCreatedAt(post.record) ?? post.indexedAt,
                       author: {
                         did: post.author.did,
                         handle: post.author.handle,
@@ -309,7 +310,7 @@ export default function PostActions(props: Props) {
                   uri: post.uri,
                   cid: post.cid,
                   text: text.toString(),
-                  indexedAt: post.indexedAt,
+                  createdAt: getCreatedAt(post.record) ?? post.indexedAt,
                   author: {
                     did: post.author.did,
                     handle: post.author.handle,

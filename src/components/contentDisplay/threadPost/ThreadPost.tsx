@@ -4,7 +4,7 @@ import Avatar from "@/components/dataDisplay/avatar/Avatar";
 import PostActions from "@/components/dataDisplay/postActions/PostActions";
 import PostEmbed from "@/components/dataDisplay/postEmbed/PostEmbed";
 import PostText from "@/components/dataDisplay/postText/postText";
-import { getFormattedDate } from "@/lib/utils/time";
+import { getFormattedDate, getCreatedAt } from "@/lib/utils/time";
 import { AppBskyFeedDefs } from "@atproto/api";
 import { useRouter } from "next/navigation";
 import { ContentFilterResult } from "../../../../types/feed";
@@ -86,7 +86,7 @@ export default function ThreadPost(props: Props) {
         )}
         {!hidden && post.embed && <PostEmbed content={post.embed} depth={0} />}
         <div className="text-sm text-skin-tertiary mt-3 font-medium">
-          {getFormattedDate(post.indexedAt)}
+          {getFormattedDate(getCreatedAt(post.record) ?? post.indexedAt)}
         </div>
       </div>
       <PostActions post={post} mode="thread" />

@@ -18,7 +18,7 @@ export interface ComposerOptionsQuote {
   uri: string;
   cid: string;
   text: string;
-  indexedAt: string;
+  createdAt: string;
   author: {
     did: string;
     handle: string;

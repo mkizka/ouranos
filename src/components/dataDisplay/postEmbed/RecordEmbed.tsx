@@ -1,7 +1,7 @@
 import { AppBskyEmbedRecord, AppBskyEmbedRecordWithMedia } from "@atproto/api";
 import PostText from "../postText/postText";
 import Avatar from "../avatar/Avatar";
-import { getRelativeTime } from "@/lib/utils/time";
+import { getRelativeTime, getCreatedAt } from "@/lib/utils/time";
 import PostEmbed from "./PostEmbed";
 import NotFoundEmbed from "./NotFoundEmbed";
 import BlockedEmbed from "./BlockedEmbed";
@@ -54,7 +54,7 @@ export default function RecordEmbed(props: Props) {
                 </span>
               </span>
               <span className="text-skin-tertiary whitespace-nowrap font-medium">
-                &nbsp;· {getRelativeTime(record.indexedAt)}
+                &nbsp;· {getRelativeTime(getCreatedAt(record.value) ?? record.indexedAt)}
               </span>
             </div>
             <div className="mt-1">

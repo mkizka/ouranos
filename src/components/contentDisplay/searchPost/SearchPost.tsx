@@ -5,7 +5,7 @@ import PostActions from "@/components/dataDisplay/postActions/PostActions";
 import PostEmbed from "@/components/dataDisplay/postEmbed/PostEmbed";
 import PostText from "@/components/dataDisplay/postText/postText";
 import { getPostId } from "@/lib/utils/link";
-import { getRelativeTime } from "@/lib/utils/time";
+import { getRelativeTime, getCreatedAt } from "@/lib/utils/time";
 import { AppBskyFeedDefs } from "@atproto/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ interface Props {
 
 const SearchPost = memo(function SearchPost(props: Props) {
   const { post } = props;
-  const { author, indexedAt } = post;
+  const { author } = post;
   const router = useRouter();
 
   return (
@@ -68,7 +68,7 @@ const SearchPost = memo(function SearchPost(props: Props) {
               </span>
             </Link>
             <span className="text-skin-tertiary whitespace-nowrap font-medium">
-              &nbsp;· {getRelativeTime(indexedAt)}
+              &nbsp;· {getRelativeTime(getCreatedAt(post.record) ?? post.indexedAt)}
             </span>
           </div>
           <PostText record={post.record} />
